@@ -1,0 +1,17 @@
+#This is sample config file 
+#Mon Jun 06 10:08:42 ICT 2016
+connectName=[ Connection name. Eg\: cpc_reporting ]
+hostIP=[ your db ip. Eg \: 192.168.3.67]
+hostPort=[your db port. Eg\: 3306]
+databaseName=[ your db selected name. Eg\: reportingdb]
+characterEncoding=[connection encode.  Default\: utf8]
+characterSetResults=[Result set encode.  Default\: utf8]
+useUnicode=[enable use unicode. Default\: true]
+autoReconnect=[enable auto connect. Default\: true]
+initPoolSize=[set init number of connections. Default\: 1]
+maxPoolSize=[set max number of connections. Default\: 3 or more]
+refreshTime=[set time (in seconds) to refresh pool. Default\: 5 ]
+username=[ deploy username]
+password=[ deploy password]
+username_dev=[ developer username]
+password_dev=[ developer password]

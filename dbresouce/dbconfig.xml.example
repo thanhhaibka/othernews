@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>This is sample config file </comment>
+<entry key="connectName">[ Connection name. Eg: cpc_reporting ]</entry>
+<entry key="hostIP">[ your db ip. Eg : 192.168.3.67]</entry>
+<entry key="hostPort">[your db port. Eg: 3306]</entry>
+<entry key="databaseName">[ your db selected name. Eg: reportingdb]</entry>
+<entry key="characterEncoding">[connection encode.  Default: utf8]</entry>
+<entry key="characterSetResults">[Result set encode.  Default: utf8]</entry>
+<entry key="useUnicode">[enable use unicode. Default: true]</entry>
+<entry key="autoReconnect">[enable auto connect. Default: true]</entry>
+<entry key="initPoolSize">[set init number of connections. Default: 1]</entry>
+<entry key="maxPoolSize">[set max number of connections. Default: 3 or more]</entry>
+<entry key="refreshTime">[set time (in seconds) to refresh pool. Default: 5 ]</entry>
+<entry key="username">[ deploy username]</entry>
+<entry key="password">[ deploy password]</entry>
+<entry key="username_dev">[ developer username]</entry>
+<entry key="password_dev">[ developer password]</entry>
+</properties>
