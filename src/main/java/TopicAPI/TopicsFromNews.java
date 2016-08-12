@@ -1,14 +1,15 @@
 package TopicAPI;
 
+import org.codehaus.jettison.json.JSONArray;
 import org.rapidoid.commons.MediaType;
 import org.rapidoid.http.Req;
+import org.rapidoid.http.ReqHandler;
 import org.rapidoid.http.Resp;
-import org.rapidoid.http.fast.ReqHandler;
-
 import vcc.optimization.othernews.findtopic.InferDocument;
 
-public class TopicsFromNews implements ReqHandler{
-	public Object handle(Req req) throws Exception {
+public class TopicsFromNews implements ReqHandler {
+	@Override
+	public Object execute(Req req) throws Exception {
 		Resp resp = req.response();
 
 		// STEP 1. SERVICE MONITOR
@@ -34,10 +35,18 @@ public class TopicsFromNews implements ReqHandler{
 
 		// STEP 3. CONTENT BUID
 		resp.contentType(MediaType.TEXT_PLAIN_UTF8);
-		resp.content(InferDocument.getInstance().getTopicsJSONFromContent(guid).toString(4));
-//		resp.content("k14_osite = "+new ShRtg().getJSONListNewsFromRtgAPI(NewsUpdate.apiTop20SohaNewsID).toString(4));
+		System.out.println(guid);
+		JSONArray jsar = InferDocument.getInstance().getTopicsJSONFromContent(guid);
+		// if(jsar!=null&&jsar.length()>0)
+		try {
+			if (jsar != null)
+				resp.plain(jsar.toString(4));
+		} catch (Exception e) {
+		}
+		// resp.content("k14_osite = "+new
+		// ShRtg().getJSONListNewsFromRtgAPI(NewsUpdate.apiTop20SohaNewsID).toString(4));
 		return resp;
-		
+
 	}
 
 }

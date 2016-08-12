@@ -8,9 +8,9 @@ public class VCTokenizer {
 
 	public static VCTokenizer getInstance() {
 		if (instance == null){
-			System.out.println("Setup Tokenizer!");
+//			System.out.println("Setup Tokenizer!");
 			instance = new VCTokenizer();
-			System.out.println("OK!");
+//			System.out.println("OK!");
 		}
 			
 		return instance;

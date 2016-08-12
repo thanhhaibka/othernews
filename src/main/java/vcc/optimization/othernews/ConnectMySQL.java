@@ -1,15 +1,16 @@
 package vcc.optimization.othernews;
 
+import opennlp.tools.util.InvalidFormatException;
+import vn.edu.vnu.uet.nlp.segmenter.TPSegmenter;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import opennlp.tools.util.InvalidFormatException;
-import vn.edu.vnu.uet.nlp.segmenter.TPSegmenter;
 
 public class ConnectMySQL {
 	private static ConnectMySQL instance;
@@ -25,14 +26,27 @@ public class ConnectMySQL {
 		this.listNews = list;
 	}
 
-	protected ConnectMySQL() throws ClassNotFoundException, SQLException {
+	public ConnectMySQL() throws ClassNotFoundException, SQLException {
+//		System.out.println(Name.userName + " || " + Name.password + "||" + Name.hostName + " || " + Name.dbName);
 		conn = getMySQLConnection(Name.hostName, Name.dbName, Name.userName, Name.password);
-//		getAllNews();
 	}
 
 	public ConnectMySQL(String s) throws ClassNotFoundException, SQLException {
+//		System.out.println(Name.userName + " || " + Name.password + "||" + Name.hostName + " || " + Name.dbName);
 		conn = getMySQLConnection(Name.hostName, Name.dbName, Name.userName, Name.password);
-//		getAllNews();
+	}
+
+	public ArrayList<String> getNewNews() throws SQLException, ClassNotFoundException {
+		ArrayList<String> newsids = new ArrayList<String>();
+//		d.setDate(d.getHours() - 24);
+		String sql = "SELECT newsId, is_deleted FROM  `news`.`news_resource` where publishDate BETWEEN DATE_SUB(NOW(), INTERVAL 2 DAY) AND NOW() " +
+				"and is_deleted=0 and sourceNews= 'Soha';";
+		ResultSet rs = conn.createStatement().executeQuery(sql);
+		while (rs.next()) {
+			newsids.add(rs.getString("newsId"));
+
+		}
+		return newsids;
 	}
 
 	public Connection getConn() {
@@ -67,7 +81,7 @@ public class ConnectMySQL {
 
 		// Cấu trúc URL Connection dành cho Oracle
 		// Ví dụ: jdbc:mysql://localhost:3306/simplehr
-		String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName;
+		String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName + "?autoReconnect=true";
 
 		java.sql.Connection conn = DriverManager.getConnection(connectionURL, userName, password);
 		System.out.println("connected!");
@@ -78,8 +92,7 @@ public class ConnectMySQL {
 		try {
 			listNews = new ArrayList<String>();
 			long d = 0;
-			ResultSet rs = conn.createStatement()
-					.executeQuery(Name.query_getDataToTrain);
+			ResultSet rs = conn.createStatement().executeQuery(Name.query_getDataToTrain);
 			while (rs.next()) {
 				String data = "-" + rs.getLong("newsId") + "\t" + rs.getString("title") + ". " + rs.getString("sapo");
 				List<String> ar = JSoupTest.getStringsFromUrl(rs.getString("content"));
@@ -100,11 +113,17 @@ public class ConnectMySQL {
 			e1.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException, InvalidFormatException, IOException {
-//		VietTokenizer tokenizer = new VietTokenizer();
-//		System.out.println(tokenizer.tokenize("hôm nay trời thật đẹp.")[0]);;
+
+	public static void main(String[] args)
+			throws ClassNotFoundException, SQLException, InvalidFormatException, IOException {
+		// VietTokenizer tokenizer = new VietTokenizer();
+		// System.out.println(tokenizer.tokenize("hôm nay trời thật đẹp.")[0]);;
+		// ConnectMySQL.getInstance();
 //		ConnectMySQL.getInstance();
-		ConnectMySQL.getInstance().getAllNews();
+//		String s = "SELECT  * FROM  `news`.`news_resource`  LIMIT 0, 10 ;";
+//		ResultSet rs = new ConnectMySQL().conn.createStatement().executeQuery(s);
+//		System.out.print(rs);
+		ConnectMySQL connectMySQL = new ConnectMySQL();
+		System.out.print(connectMySQL.getNewNews().size());
 	}
 }

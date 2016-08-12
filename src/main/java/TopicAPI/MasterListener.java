@@ -8,7 +8,7 @@ public class MasterListener {
 
 	public void start() {
 		System.out.println("Master update service started...");
-		stpe.scheduleWithFixedDelay(new MonitorMng(), 0, 1, TimeUnit.SECONDS);
+		stpe.scheduleWithFixedDelay(new MonitorMng(), 0, 90, TimeUnit.SECONDS);
 	}
 
 	public void stop() {

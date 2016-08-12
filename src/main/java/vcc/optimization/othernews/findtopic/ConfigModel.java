@@ -1,5 +1,7 @@
 package vcc.optimization.othernews.findtopic;
 
+import vn.hus.nlp.tokenizer.VietTokenizer;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -23,21 +25,36 @@ package vcc.optimization.othernews.findtopic;
  */
 public class ConfigModel {
 
-	private  String modelDir = "mallet-model";
-	private final  String ldaModelSave = "mallet-ldamodel.gz";
-	private final  String topicKeyWord = "topicKeysFile.dat";
-	private final  String diagnostics = "diagnosticsFile.dat";
-	private final  String inferenceFile = "inferencefile.model";
-	private final  String previousInstanceListFile = "input.mallet";
-	
-	public ConfigModel(){
-		
+	private VietTokenizer tokenizer = null;
+
+	public VietTokenizer getTokenizer() {
+		return tokenizer;
 	}
-	
-	public ConfigModel(String s){
+
+	public void setTokenizer(VietTokenizer tokenizer) {
+		this.tokenizer = tokenizer;
+	}
+
+	private String modelDir = "mallet-model";
+	private final String ldaModelSave = "mallet-ldamodel.gz";
+	private final String topicKeyWord = "topicKeysFile.dat";
+	private final String diagnostics = "diagnosticsFile.dat";
+	private final String inferenceFile = "inferencefile.model";
+	private final String previousInstanceListFile = "input.mallet";
+
+	public ConfigModel() {
+//		try {
+//			tokenizer = new VietTokenizer();
+//		} catch (Exception e) {
+//		}
+//		System.out.println(tokenizer.segment(
+//				"Với 4 Genji, Junkrat, Mercy và một hero bất kỳ chơi trên cứ điểm đầu tiên của bản đồ Volskaya Industries, chúng ta hoàn toàn có thể chơi 'cầu lông' ngay trong Overwatch."));
+	}
+
+	public ConfigModel(String s) {
 		modelDir = s;
 	}
-	
+
 	public String getLdaModel() {
 		return modelDir + "/" + ldaModelSave;
 	}
@@ -45,35 +62,38 @@ public class ConfigModel {
 	public String getTopicKeyWordFile() {
 		return modelDir + "/" + topicKeyWord;
 	}
-	
-	public String getDiagnostics(){
+
+	public String getDiagnostics() {
 		return modelDir + "/" + diagnostics;
 	}
-	
-	
-	public String getInferenceFile(){
+
+	public String getInferenceFile() {
 		return modelDir + "/" + inferenceFile;
 	}
 
-	public  String getPreviousinstancelistfile() {
-		return modelDir + "/" +  previousInstanceListFile;
+	public String getPreviousinstancelistfile() {
+		return modelDir + "/" + previousInstanceListFile;
 	}
 
 	public static ConfigModel configModel = null;
-	
-	public static ConfigModel getInstance(){
-		if (configModel == null){
+
+	public static ConfigModel getInstance() {
+		if (configModel == null) {
 			configModel = new ConfigModel();
 		}
-		
+
 		return configModel;
 	}
-	
-	public static ConfigModel getInstance(String s){
-		if (configModel == null){
+
+	public static ConfigModel getInstance(String s) {
+		if (configModel == null) {
 			configModel = new ConfigModel(s);
 		}
-		
+
 		return configModel;
+	}
+
+	public static void main(String[] args) {
+		ConfigModel.getInstance();
 	}
 }
